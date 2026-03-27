@@ -1,59 +1,88 @@
 /* ────────────────────────────────────────────────────
    RESET & BASE
+   Zera margens, paddings e define box-sizing
+   em todos os elementos, garantindo consistência
+   entre navegadores.
 ──────────────────────────────────────────────────── */
 *,
 *::before,
 *::after {
     box-sizing: border-box;
+    /* largura inclui padding e border */
     margin: 0;
     padding: 0;
 }
 
+/* ── Variáveis CSS globais (Design Tokens) ──
+   Definidas no :root para serem acessíveis
+   em todo o documento via var(--nome). */
 :root {
-    /* Cores base */
+    /* ── Paleta de cores neutras ── */
     --white: #ffffff;
     --bg: #f3f4f8;
+    /* fundo geral da página */
     --border: #e4e6ef;
+    /* bordas suaves */
     --border2: #cdd0e0;
+    /* bordas um pouco mais fortes */
     --text: #1b1d2e;
+    /* texto principal (quase preto) */
     --text2: #636880;
+    /* texto secundário (cinza médio) */
     --text3: #a0a4b8;
+    /* texto terciário / placeholders */
 
-    /* Colunas */
+    /* ── Cores das colunas Kanban ── */
     --todo: #e53e3e;
+    /* vermelho — "A fazer" */
     --prog: #3b6fff;
+    /* azul    — "Em progresso" */
     --done: #16a34a;
+    /* verde   — "Finalizado" */
     --hist: #9333ea;
+    /* roxo    — "Histórico" */
 
-    /* Prioridades */
+    /* ── Cores de prioridade ── */
     --p-alta: #e53e3e;
+    /* vermelho — prioridade alta */
     --p-media: #d97706;
+    /* laranja  — prioridade média */
     --p-baixa: #16a34a;
+    /* verde    — prioridade baixa */
 
-    /* Accent */
+    /* ── Cor de destaque (accent) ── */
     --accent: #3b6fff;
+    /* azul principal para botões e foco */
     --accent-h: #2a55d8;
+    /* tom mais escuro para hover */
 
-    /* Sombras */
+    /* ── Sombras reutilizáveis ── */
     --sh-card: 0 1px 4px rgba(0, 0, 0, .06), 0 4px 14px rgba(0, 0, 0, .05);
+    /* card normal */
     --sh-card-h: 0 4px 20px rgba(0, 0, 0, .10);
+    /* card em hover */
     --sh-modal: 0 20px 60px rgba(0, 0, 0, .14), 0 4px 16px rgba(0, 0, 0, .08);
+    /* modal flutuante */
     --sh-ctx: 0 8px 28px rgba(0, 0, 0, .12), 0 2px 8px rgba(0, 0, 0, .06);
+    /* context menu */
 
-    /* Raios */
+    /* ── Raios de borda padronizados ── */
     --r-sm: 6px;
     --r-md: 10px;
     --r-lg: 14px;
     --r-xl: 18px;
 
+    /* ── Altura fixa do topbar ── */
     --topbar-h: 60px;
 }
 
+/* Garante que a página ocupe 100% da altura mínima */
 html {
     height: 100%;
     scroll-behavior: smooth;
 }
 
+/* Estilo base do corpo da página */
 body {
     font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
     font-size: 14px;
@@ -62,20 +91,25 @@ body {
     background: var(--bg);
     min-height: 100%;
     -webkit-font-smoothing: antialiased;
+    /* suaviza fontes no macOS/iOS */
 }
 
 /* ────────────────────────────────────────────────────
-   TOPBAR
+   TOPBAR (barra superior fixa)
+   Fica "grudada" no topo durante o scroll.
 ──────────────────────────────────────────────────── */
 .topbar {
     position: sticky;
+    /* permanece visível ao rolar a página */
     top: 0;
     z-index: 40;
+    /* fica acima dos cards mas abaixo dos modais */
     background: var(--white);
     border-bottom: 1px solid var(--border);
     height: var(--topbar-h);
 }
 
+/* Container interno do topbar — centraliza e limita a largura */
 .topbar-inner {
     height: 100%;
     max-width: 1560px;
@@ -89,14 +123,16 @@ body {
     gap: 12px;
 }
 
-/* Brand */
+/* ── Logo / Brand ── */
 .brand {
     display: flex;
     align-items: center;
     gap: 10px;
     flex-shrink: 0;
+    /* não encolhe quando a tela for pequena */
 }
 
+/* Ícone quadrado colorido do logo */
 .brand-icon {
     width: 36px;
     height: 36px;
@@ -108,6 +144,7 @@ body {
     justify-content: center;
 }
 
+/* Nome do produto ao lado do ícone */
 .brand-name {
     font-size: 15px;
     font-weight: 700;
@@ -115,7 +152,7 @@ body {
     color: var(--text);
 }
 
-/* Stats chips — Flex row */
+/* ── Chips de estatísticas (A fazer / Em progresso / Concluídas) ── */
 .topbar-stats {
     display: flex;
     align-items: center;
@@ -125,12 +162,14 @@ body {
     justify-content: flex-end;
 }
 
+/* Estilo base dos chips de contagem */
 .stat-chip {
     display: flex;
     align-items: center;
     gap: 5px;
     padding: 5px 11px;
     border-radius: 20px;
+    /* formato pílula */
     font-size: 12px;
     font-weight: 500;
     border: 1px solid transparent;
@@ -138,6 +177,7 @@ body {
     line-height: 1;
 }
 
+/* Bolinha colorida dentro do chip */
 .chip-dot {
     width: 7px;
     height: 7px;
@@ -145,6 +185,7 @@ body {
     flex-shrink: 0;
 }
 
+/* Chip "A fazer" — vermelho */
 .chip-todo {
     background: #fff1f1;
     color: var(--todo);
@@ -155,6 +196,7 @@ body {
     background: var(--todo);
 }
 
+/* Chip "Em progresso" — azul */
 .chip-prog {
     background: #eef3ff;
     color: var(--prog);
@@ -165,6 +207,7 @@ body {
     background: var(--prog);
 }
 
+/* Chip "Concluídas" — verde */
 .chip-done {
     background: #f0fdf4;
     color: var(--done);
@@ -177,6 +220,8 @@ body {
 
 /* ────────────────────────────────────────────────────
    BOARD WRAPPER
+   Container que centraliza e dá espaçamento
+   ao grid do quadro.
 ──────────────────────────────────────────────────── */
 .board-wrap {
     max-width: 1560px;
@@ -186,19 +231,21 @@ body {
 
 /* ────────────────────────────────────────────────────
    GRID DO BOARD — CSS Grid responsivo
-   Desktop  (>= 1024px): 4 colunas
-   Tablet   (>= 640px):  2 colunas
-   Mobile   (<  640px):  1 coluna (scroll horizontal leve)
+   Desktop  (>= 1024px): 4 colunas lado a lado
+   Tablet   (>= 640px):  2 colunas (ver @media)
+   Mobile   (<  640px):  1 coluna  (ver @media)
 ──────────────────────────────────────────────────── */
 .kb-board {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
+    /* 4 colunas iguais */
     gap: 16px;
     align-items: start;
+    /* colunas com alturas independentes (não esticam)*/
 }
 
 /* ────────────────────────────────────────────────────
-   COLUNA
+   COLUNA DO KANBAN
 ──────────────────────────────────────────────────── */
 .kb-col {
     background: var(--white);
@@ -206,17 +253,19 @@ body {
     border: 1px solid var(--border);
     display: flex;
     flex-direction: column;
-    /* Flex column: header + cards empilhados */
+    /* empilha header + body */
     min-height: 160px;
+    /* garante área mínima para drop */
     transition: border-color .15s, box-shadow .15s;
 }
 
+/* Estado de destaque quando um card é arrastado sobre a coluna */
 .kb-col.hovered {
     border-color: var(--accent);
     box-shadow: 0 0 0 3px rgba(59, 111, 255, .10);
 }
 
-/* Cabeçalho da coluna — Flex row */
+/* ── Cabeçalho da coluna ── */
 .col-head {
     padding: 14px 16px 12px;
     display: flex;
@@ -224,8 +273,10 @@ body {
     gap: 8px;
     border-bottom: 1px solid var(--border);
     flex-shrink: 0;
+    /* não encolhe com flex */
 }
 
+/* Barra colorida vertical que identifica a coluna */
 .col-stripe {
     width: 4px;
     height: 16px;
@@ -233,6 +284,7 @@ body {
     flex-shrink: 0;
 }
 
+/* Cor da stripe por coluna */
 .col-todo .col-stripe {
     background: var(--todo);
 }
@@ -249,8 +301,10 @@ body {
     background: var(--hist);
 }
 
+/* Nome da coluna em maiúsculas */
 .col-name {
     flex: 1;
+    /* ocupa o espaço restante empurrando o contador para a direita */
     font-size: 11px;
     font-weight: 700;
     letter-spacing: .07em;
@@ -258,6 +312,7 @@ body {
     color: var(--text2);
 }
 
+/* Contador de tarefas no canto direito do cabeçalho */
 .col-count {
     font-size: 11px;
     font-weight: 600;
@@ -270,16 +325,18 @@ body {
     text-align: center;
 }
 
-/* Corpo da coluna */
+/* ── Corpo da coluna (área dos cards) ── */
 .col-body {
     padding: 10px;
     display: flex;
     flex-direction: column;
+    /* cards empilhados verticalmente */
     gap: 8px;
     flex: 1;
+    /* ocupa o restante do espaço disponível na coluna */
 }
 
-/* Botão Nova Tarefa */
+/* ── Botão "Nova tarefa" (apenas na coluna A fazer) ── */
 .col-add-btn {
     display: flex;
     align-items: center;
@@ -289,6 +346,7 @@ body {
     padding: 9px;
     background: transparent;
     border: 1.5px dashed var(--border2);
+    /* borda tracejada indica área de ação */
     border-radius: var(--r-md);
     font-size: 12px;
     font-weight: 500;
@@ -306,7 +364,7 @@ body {
 }
 
 /* ────────────────────────────────────────────────────
-   CARD
+   CARD DE TAREFA
 ──────────────────────────────────────────────────── */
 .kb-card {
     background: var(--white);
@@ -314,12 +372,16 @@ body {
     border-radius: var(--r-lg);
     padding: 12px 13px 11px;
     cursor: grab;
+    /* cursor de "agarrar" indica drag & drop */
     user-select: none;
+    /* evita seleção de texto ao arrastar */
     box-shadow: var(--sh-card);
     transition: box-shadow .15s, border-color .15s, transform .12s;
     animation: fadeUp .18s ease both;
+    /* animação de entrada */
 }
 
+/* Animação de entrada suave (de baixo para cima) ao renderizar */
 @keyframes fadeUp {
     from {
         opacity: 0;
@@ -332,21 +394,24 @@ body {
     }
 }
 
+/* Destaque ao passar o mouse — sombra mais intensa */
 .kb-card:hover {
     box-shadow: var(--sh-card-h);
     border-color: var(--border2);
 }
 
+/* Ao pressionar/segurar — cursor muda e card cresce levemente */
 .kb-card:active {
     cursor: grabbing;
     transform: scale(1.015);
 }
 
+/* Card semi-transparente durante o arraste */
 .kb-card.dragging {
     opacity: .3;
 }
 
-/* Topo do card — Flex row */
+/* ── Topo do card (título + botão de menu) ── */
 .card-top {
     display: flex;
     align-items: flex-start;
@@ -354,14 +419,17 @@ body {
     margin-bottom: 5px;
 }
 
+/* Título da tarefa */
 .card-title {
     flex: 1;
+    /* empurra o botão de menu para a direita */
     font-size: 13px;
     font-weight: 600;
     color: var(--text);
     line-height: 1.45;
 }
 
+/* Botão ⋯ que abre o context menu */
 .card-menu-btn {
     flex-shrink: 0;
     width: 24px;
@@ -384,7 +452,7 @@ body {
     color: var(--text2);
 }
 
-/* Descrição */
+/* ── Descrição do card ── */
 .card-desc {
     font-size: 12px;
     color: var(--text2);
@@ -392,22 +460,24 @@ body {
     margin-bottom: 10px;
 }
 
-/* Rodapé do card — Flex row */
+/* ── Rodapé do card (botões ◀ ▶ + badge de prioridade) ── */
 .card-foot {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    /* botões à esquerda, badge à direita */
     flex-wrap: wrap;
     gap: 6px;
     margin-top: 8px;
 }
 
-/* Botões de movimento */
+/* Container dos botões de mover */
 .card-moves {
     display: flex;
     gap: 4px;
 }
 
+/* Botões ◀ ▶ de movimentação entre colunas */
 .move-btn {
     display: flex;
     align-items: center;
@@ -429,14 +499,16 @@ body {
     color: var(--text);
 }
 
-/* Badge de prioridade */
+/* ── Badge de prioridade ── */
 .prio-badge {
     font-size: 10px;
     font-weight: 600;
     padding: 3px 9px;
     border-radius: 20px;
+    /* formato pílula */
 }
 
+/* Cores do badge por nível de prioridade */
 .badge-alta {
     background: #fff1f1;
     color: var(--p-alta);
@@ -455,7 +527,7 @@ body {
     border: 1px solid #bbf7d0;
 }
 
-/* Data do card */
+/* ── Data de criação do card ── */
 .card-date {
     display: flex;
     align-items: center;
@@ -465,16 +537,19 @@ body {
     color: var(--text3);
 }
 
-/* Card histórico */
+/* ── Estilo especial para cards no Histórico ── */
 .hist-card {
     opacity: .72;
+    /* tom levemente apagado para indicar conclusão */
 }
 
+/* Título riscado nos cards do histórico */
 .hist-card .card-title {
     text-decoration: line-through;
     color: var(--text3);
 }
 
+/* Stamp de data de conclusão no rodapé do card histórico */
 .hist-stamp {
     display: flex;
     align-items: center;
@@ -483,29 +558,39 @@ body {
     font-size: 10px;
     font-weight: 600;
     color: var(--done);
+    /* verde para indicar sucesso */
 }
 
 /* ────────────────────────────────────────────────────
-   MODAL — overlay + card
+   MODAL — Overlay escuro + card branco centralizado
 ──────────────────────────────────────────────────── */
+
+/* Fundo escuro semi-transparente que cobre a página */
 .modal-overlay {
     position: fixed;
     inset: 0;
+    /* ocupa toda a tela (top/right/bottom/left = 0) */
     background: rgba(20, 22, 40, .40);
+    /* escurece o fundo */
     backdrop-filter: blur(3px);
+    /* desfoca o conteúdo atrás */
     -webkit-backdrop-filter: blur(3px);
     z-index: 200;
+    /* acima do board e topbar */
     display: none;
-    /* Flex para centralizar o card */
+    /* oculto por padrão */
+    /* Flex para centralizar o modal no meio da tela */
     align-items: center;
     justify-content: center;
     padding: 16px;
 }
 
+/* Classe adicionada via JS para exibir o overlay */
 .modal-overlay.open {
     display: flex;
 }
 
+/* Card branco do modal */
 .modal {
     background: var(--white);
     border-radius: var(--r-xl);
@@ -514,10 +599,13 @@ body {
     width: 100%;
     max-width: 420px;
     animation: modalIn .18s ease both;
+    /* aparece com animação suave */
     display: flex;
     flex-direction: column;
+    /* head + body + foot empilhados */
 }
 
+/* Animação de entrada do modal (escala + deslize para cima) */
 @keyframes modalIn {
     from {
         opacity: 0;
@@ -530,7 +618,7 @@ body {
     }
 }
 
-/* Cabeçalho modal */
+/* ── Cabeçalho do modal (ícone + título + botão fechar) ── */
 .modal-head {
     display: flex;
     align-items: center;
@@ -540,6 +628,7 @@ body {
     flex-shrink: 0;
 }
 
+/* Ícone colorido ao lado do título do modal */
 .modal-icon-wrap {
     width: 30px;
     height: 30px;
@@ -550,16 +639,19 @@ body {
     flex-shrink: 0;
 }
 
+/* Ícone do modal "Nova tarefa" — tom vermelho */
 .new-icon {
     background: #fff1f1;
     color: var(--todo);
 }
 
+/* Ícone do modal "Editar tarefa" — tom azul */
 .edit-icon {
     background: #eef3ff;
     color: var(--prog);
 }
 
+/* Título do modal */
 .modal-title {
     flex: 1;
     font-size: 14px;
@@ -568,6 +660,7 @@ body {
     letter-spacing: -.2px;
 }
 
+/* Botão X para fechar o modal */
 .modal-close-btn {
     width: 28px;
     height: 28px;
@@ -587,20 +680,23 @@ body {
     color: var(--text2);
 }
 
-/* Corpo modal */
+/* ── Corpo do modal (campos do formulário) ── */
 .modal-body {
     padding: 16px 18px;
     display: flex;
     flex-direction: column;
+    /* campos empilhados */
     gap: 14px;
 }
 
+/* Wrapper de cada campo (label + input) */
 .field {
     display: flex;
     flex-direction: column;
     gap: 5px;
 }
 
+/* Rótulo do campo em maiúsculas e estilo discreto */
 .field-label {
     font-size: 11px;
     font-weight: 700;
@@ -609,10 +705,12 @@ body {
     color: var(--text2);
 }
 
+/* Asterisco vermelho que indica campo obrigatório */
 .req-mark {
     color: var(--todo);
 }
 
+/* Estilo base dos inputs e textarea */
 .field-input {
     width: 100%;
     padding: 9px 12px;
@@ -626,35 +724,41 @@ body {
     transition: border-color .15s, box-shadow .15s;
 }
 
+/* Placeholder em tom mais claro */
 .field-input::placeholder {
     color: var(--text3);
 }
 
+/* Destaque azul ao focar o campo */
 .field-input:focus {
     border-color: var(--accent);
     box-shadow: 0 0 0 3px rgba(59, 111, 255, .12);
     background: var(--white);
 }
 
+/* Borda vermelha de erro (validação de campo obrigatório) */
 .field-input.error {
     border-color: var(--todo);
     box-shadow: 0 0 0 3px rgba(229, 62, 62, .10);
 }
 
+/* Textarea redimensionável verticalmente */
 .field-textarea {
     resize: vertical;
     min-height: 76px;
     line-height: 1.55;
 }
 
-/* Seletor de prioridade — Flex row */
+/* ── Seletor de prioridade (botões Alta / Média / Baixa) ── */
 .prio-row {
     display: flex;
     gap: 6px;
 }
 
+/* Botão de prioridade — inativo por padrão */
 .prio-btn {
     flex: 1;
+    /* os 3 botões dividem o espaço igualmente */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -676,24 +780,28 @@ body {
     color: var(--text);
 }
 
+/* Estado ativo do botão "Alta" — fundo e borda vermelhos */
 .prio-btn.active[data-prio="alta"] {
     background: #fff1f1;
     border-color: #fca5a5;
     color: var(--p-alta);
 }
 
+/* Estado ativo do botão "Média" — fundo e borda laranjas */
 .prio-btn.active[data-prio="media"] {
     background: #fffbeb;
     border-color: #fcd34d;
     color: var(--p-media);
 }
 
+/* Estado ativo do botão "Baixa" — fundo e borda verdes */
 .prio-btn.active[data-prio="baixa"] {
     background: #f0fdf4;
     border-color: #86efac;
     color: var(--p-baixa);
 }
 
+/* Bolinha colorida dentro do botão de prioridade */
 .pip {
     width: 7px;
     height: 7px;
@@ -713,18 +821,19 @@ body {
     background: var(--p-baixa);
 }
 
-/* Rodapé modal */
+/* ── Rodapé do modal (botões Cancelar / Salvar) ── */
 .modal-foot {
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    /* alinha os botões à direita */
     gap: 8px;
     padding: 14px 18px 18px;
     border-top: 1px solid var(--border);
     flex-shrink: 0;
 }
 
-/* Botões gerais */
+/* ── Botões gerais (Cancelar e Salvar) ── */
 .btn {
     display: inline-flex;
     align-items: center;
@@ -740,6 +849,7 @@ body {
     white-space: nowrap;
 }
 
+/* Botão "Cancelar" — estilo fantasma com borda */
 .btn-ghost {
     background: transparent;
     border: 1px solid var(--border2);
@@ -751,6 +861,7 @@ body {
     color: var(--text);
 }
 
+/* Botão "Salvar / Criar tarefa" — fundo azul sólido */
 .btn-primary {
     background: var(--accent);
     color: #fff;
@@ -761,12 +872,15 @@ body {
 }
 
 /* ────────────────────────────────────────────────────
-   CONTEXT MENU
+   CONTEXT MENU (menu flutuante ao clicar em ⋯)
 ──────────────────────────────────────────────────── */
 .ctx-menu {
     position: fixed;
+    /* posicionado em coordenadas absolutas da viewport */
     z-index: 300;
+    /* acima de tudo, incluindo modais */
     display: none;
+    /* oculto por padrão */
     flex-direction: column;
     background: var(--white);
     border: 1px solid var(--border);
@@ -775,8 +889,10 @@ body {
     padding: 5px;
     min-width: 195px;
     animation: ctxIn .12s ease both;
+    /* aparece com micro-animação */
 }
 
+/* Animação de entrada: ligeiro zoom in */
 @keyframes ctxIn {
     from {
         opacity: 0;
@@ -789,10 +905,12 @@ body {
     }
 }
 
+/* Classe adicionada via JS para exibir o menu */
 .ctx-menu.open {
     display: flex;
 }
 
+/* Item do menu de contexto */
 .ctx-item {
     display: flex;
     align-items: center;
@@ -816,11 +934,13 @@ body {
     color: var(--text);
 }
 
+/* Item desabilitado — opacidade reduzida e sem interação */
 .ctx-item.disabled {
     opacity: .35;
     pointer-events: none;
 }
 
+/* Item "Excluir" — cor vermelha para indicar ação destrutiva */
 .ctx-danger {
     color: var(--p-alta);
 }
@@ -830,6 +950,7 @@ body {
     color: var(--p-alta);
 }
 
+/* Separador horizontal entre grupos de itens do menu */
 .ctx-sep {
     height: 1px;
     background: var(--border);
@@ -837,7 +958,7 @@ body {
 }
 
 /* ────────────────────────────────────────────────────
-   SCROLLBAR CUSTOMIZADA
+   SCROLLBAR CUSTOMIZADA (apenas Webkit/Blink)
 ──────────────────────────────────────────────────── */
 ::-webkit-scrollbar {
     width: 6px;
@@ -858,26 +979,28 @@ body {
 }
 
 /* ────────────────────────────────────────────────────
-   RESPONSIVIDADE — Flexbox + Grid
+   RESPONSIVIDADE — Breakpoints com @media queries
 ──────────────────────────────────────────────────── */
 
-/* Tablet: 2 colunas */
+/* ── Tablet: largura entre 640px e 1023px → 2 colunas ── */
 @media (max-width: 1023px) {
     .kb-board {
         grid-template-columns: repeat(2, minmax(0, 1fr));
+        /* 2 colunas */
     }
 
-    /* Stat chips menores */
+    /* Chips ligeiramente menores */
     .stat-chip {
         font-size: 11px;
         padding: 4px 9px;
     }
 }
 
-/* Tablet pequeno / Mobile grande */
+/* ── Tablet pequeno / Mobile grande: até 767px ── */
 @media (max-width: 767px) {
     :root {
         --topbar-h: 54px;
+        /* topbar um pouco menor */
     }
 
     .topbar-inner {
@@ -892,7 +1015,6 @@ body {
         font-size: 14px;
     }
 
-    /* Stats somem o texto, ficam só ícone+número */
     .topbar-stats {
         gap: 4px;
     }
@@ -903,10 +1025,11 @@ body {
     }
 }
 
-/* Mobile: 1 coluna */
+/* ── Mobile: até 639px → 1 coluna ── */
 @media (max-width: 639px) {
     .kb-board {
         grid-template-columns: 1fr;
+        /* uma única coluna */
         gap: 12px;
     }
 
@@ -914,20 +1037,23 @@ body {
         gap: 4px;
     }
 
-    /* Modal toma tela inteira no mobile */
+    /* Modal ocupa toda a tela e sobe de baixo para cima */
     .modal-overlay {
         padding: 0;
         align-items: flex-end;
+        /* ancora o modal na base da tela */
     }
 
     .modal {
         max-width: 100%;
+        /* remove bordas arredondadas inferiores (encosta no fundo da tela) */
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
         border-radius: var(--r-xl) var(--r-xl) 0 0;
         animation: slideUp .22s ease both;
     }
 
+    /* Modal desliza da parte inferior para cima (estilo "bottom sheet") */
     @keyframes slideUp {
         from {
             opacity: 0;
@@ -940,20 +1066,23 @@ body {
         }
     }
 
-    /* Context menu mais largo no mobile */
+    /* Context menu ocupa toda a largura na parte inferior da tela */
     .ctx-menu {
         position: fixed;
         inset: auto 10px 10px;
+        /* cola no fundo com margem lateral */
         min-width: unset;
         width: calc(100% - 20px);
     }
 }
 
-/* Extra-small */
+/* ── Extra-small: até 380px (telas muito pequenas) ── */
 @media (max-width: 380px) {
     .brand-name {
         display: none;
     }
+
+    /* esconde o nome, mantém só o ícone */
 
     .topbar-inner {
         padding: 0 12px;
